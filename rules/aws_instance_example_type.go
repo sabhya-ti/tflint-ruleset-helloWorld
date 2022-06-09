@@ -10,16 +10,26 @@ import (
 // AwsInstanceExampleTypeRule checks whether ...
 type AwsInstanceExampleTypeRule struct {
 	tflint.DefaultRule
+
+	resourceType string
+	attributeName string
+	instanceTypes map[string]bool
 }
 
 // NewAwsInstanceExampleTypeRule returns a new rule
 func NewAwsInstanceExampleTypeRule() *AwsInstanceExampleTypeRule {
-	return &AwsInstanceExampleTypeRule{}
+	return &AwsInstanceExampleTypeRule{
+		resourceType: "aws_db_instance",
+		attributeName: "instance_class",
+		instanceTypes: map[string]bool{
+			"db.t2.micro": true,
+		},
+	}
 }
 
 // Name returns the rule name
 func (r *AwsInstanceExampleTypeRule) Name() string {
-	return "aws_instance_example_type"
+	return "aws_instance_t2.micro_type_caught"
 }
 
 // Enabled returns whether the rule is enabled by default
